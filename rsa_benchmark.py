@@ -1,19 +1,23 @@
-import os
-import timeit
-import numpy as np
-import csv
-import struct
-from cryptography.hazmat.primitives.asymmetric import rsa, padding
-from cryptography.hazmat.primitives import hashes
-from cryptography.hazmat.backends import default_backend
+import os # Funções do sistema (ex: Gerar bytes, criar pastas)
+import timeit # Módulo do tempo usado para medir tempo de execução
+import numpy as np # Cálculos estatísticos (média, desvio padrão)
+import csv # Guardar resultados em ficheiro CSV
+import struct # Converter inteiros para bytes (necessário para o hash)
 
-# Tamanho dos ficheiros
+from cryptography.hazmat.primitives.asymmetric import rsa, padding
+#Biblioteca para implementar o RSA (Gerar chaves, encriptar e padding)
+from cryptography.hazmat.primitives import hashes
+# Biblioteca para funções de hash (SHA-256)
+from cryptography.hazmat.backends import default_backend
+# Backend criptográfico usado pela biblioteca
+
 file_sizes = [8, 64, 512, 4096, 32768, 262144, 2097152]
+#Lista de tamanho dos ficheiros em bytes
 
 # Gerar par de chaves RSA 2048 bits 
 private_key = rsa.generate_private_key(
-    public_exponent=65537,
-    key_size=2048,
+    public_exponent=65537, # Valor padrão usado em RSA
+    key_size=2048, # Tamanho da chave (2048)
     backend=default_backend()
 )
 public_key = private_key.public_key()
@@ -80,16 +84,16 @@ def decrypt_rsa(rsa_r, encrypted_blocks):
         block = bytes(a ^ b for a, b in zip(enc_block, h))
         decrypted_blocks.append(block)
 
-    return b"".join(decrypted_blocks)
+    return b"".join(decrypted_blocks) #Junta os blocos todos
 
-# Benchmark
+# Benchmark, numero de testes
 REPS = 30
 
-def benchmark_rsa(file_path):
-    with open(file_path, "rb") as f:
+def benchmark_rsa(file_path): # Função de medição
+    with open(file_path, "rb") as f: # Lê o ficheiro
         data = f.read()
 
-    # 30 medições de cifra
+    # 30 medições de tempo  de encriptação
     enc_times = [
         timeit.timeit(lambda: encrypt_rsa(data), number=1) * 1e6
         for _ in range(REPS)
@@ -98,7 +102,7 @@ def benchmark_rsa(file_path):
     # pré-cifrar uma vez para ter o criptograma para a decifra
     rsa_r, enc_blocks = encrypt_rsa(data)
 
-    # 30 medições de decifra
+    # 30 medições de tempo de desencriptação
     dec_times = [
         timeit.timeit(lambda: decrypt_rsa(rsa_r, enc_blocks), number=1) * 1e6
         for _ in range(REPS)
