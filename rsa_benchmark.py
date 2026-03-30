@@ -50,7 +50,7 @@ def rsa_decrypt_r(rsa_r):
         )
     )
 
-# ── Cifra: Enc(m; r) = (RSA(r), H(0,r)⊕m₀, ..., H(n,r)⊕mₙ) ────────────────
+#  Cifra: Enc(m; r) = (RSA(r), H(0,r)⊕m₀, ..., H(n,r)⊕mₙ) 
 def encrypt_rsa(plaintext):
     r = os.urandom(32)          # r uniforme de 32 bytes (256 bits)
     rsa_r = rsa_encrypt_r(r)   # primeira componente do criptograma
@@ -70,7 +70,7 @@ def encrypt_rsa(plaintext):
 
     return rsa_r, encrypted_blocks
 
-# ── Decifra ───────────────────────────────────────────────────────────────────
+#  Decifra
 def decrypt_rsa(rsa_r, encrypted_blocks):
     r = rsa_decrypt_r(rsa_r)   # recuperar r
 
@@ -82,7 +82,7 @@ def decrypt_rsa(rsa_r, encrypted_blocks):
 
     return b"".join(decrypted_blocks)
 
-# ── Benchmark ─────────────────────────────────────────────────────────────────
+# Benchmark
 REPS = 30
 
 def benchmark_rsa(file_path):
@@ -111,7 +111,7 @@ def benchmark_rsa(file_path):
 
     return enc_mean, enc_std, enc_ci, dec_mean, dec_std, dec_ci
 
-# ── Correr para todos os tamanhos ─────────────────────────────────────────────
+#  Correr para todos os tamanhos 
 results = {}
 print(f"{'Tamanho':>10} | {'Enc (µs)':>10} | {'Enc std':>8} | {'Enc IC95':>8} | {'Dec (µs)':>10} | {'Dec std':>8} | {'Dec IC95':>8}")
 print("-" * 80)
@@ -123,7 +123,7 @@ for size in file_sizes:
     results[size] = (enc_mean, enc_std, enc_ci, dec_mean, dec_std, dec_ci)
     print(f"{size:>10} | {enc_mean:>10.2f} | {enc_std:>8.2f} | {enc_ci:>8.2f} | {dec_mean:>10.2f} | {dec_std:>8.2f} | {dec_ci:>8.2f}")
 
-# ── Guardar CSV ───────────────────────────────────────────────────────────────
+#  Guardar CSV 
 os.makedirs("resultados", exist_ok=True)
 with open("resultados/rsa_results.csv", "w", newline="") as f:
     writer = csv.writer(f)
