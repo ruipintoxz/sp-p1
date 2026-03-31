@@ -1,14 +1,17 @@
-import os
-import timeit
-import numpy as np
-import csv
+import os  # Funções do sistema (ex: gerar bytes aleatórios)
+import timeit  # Medir tempo de execução
+import numpy as np  # Cálculos estatísticos (média, desvio padrão)
+import csv  # Guardar resultados em ficheiro CSV
+
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
+# Biblioteca para cifragem simétrica (AES)
 from cryptography.hazmat.backends import default_backend
+#Biblioteca para backend
 
 # Tamanho dos ficheiros
 file_sizes = [8, 64, 512, 4096, 32768, 262144, 2097152]
 
-key = os.urandom(32)  # AES-256
+key = os.urandom(32)  # AES-256, gera a key aleatoria
 
 # Funções de Encriptação e Desencriptação
 def encrypt_data(data):
