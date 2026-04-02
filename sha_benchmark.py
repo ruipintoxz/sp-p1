@@ -10,11 +10,11 @@ from cryptography.hazmat.backends import default_backend #Biblioteca para backen
 file_sizes = [8, 64, 512, 4096, 32768, 262144, 2097152]
 
 # Função de hash 
-# calcula o digest SHA-256 dos dados recebidos e devolve 32 bytes
+# Calcula o digest SHA-256 dos dados recebidos e devolve 32 bytes
 def sha256_hash(data):
-    digest = Hash(SHA256(), backend=default_backend()) # inicializar o objeto de hash
-    digest.update(data) #alimentar lhe com dados
-    return digest.finalize() # finalizar e retornar o digest
+    digest = Hash(SHA256(), backend=default_backend()) # Inicializar o objeto de hash
+    digest.update(data) # Alimentar lhe com dados
+    return digest.finalize() # Finalizar e retornar o digest
 
 # Benchmark 
 
