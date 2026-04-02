@@ -1,18 +1,20 @@
-import os
-import timeit
-import numpy as np
-import csv
-from cryptography.hazmat.primitives.hashes import Hash, SHA256
-from cryptography.hazmat.backends import default_backend
+import os # Funções do sistema (ex: gerar bytes aleatórios)
+import timeit # Medir tempo de execução
+import numpy as np  # Cálculos estatísticos (média, desvio padrão)
+import csv  # Guardar resultados em ficheiro CSV
+from cryptography.hazmat.primitives.hashes import Hash, SHA256 
+# primitivas de baixo nível para medir SHA-256 diretamente, sem abstrações
+from cryptography.hazmat.backends import default_backend #Biblioteca para backend
 
 # Tamanhos de ficheiro 
 file_sizes = [8, 64, 512, 4096, 32768, 262144, 2097152]
 
 # Função de hash 
+# calcula o digest SHA-256 dos dados recebidos e devolve 32 bytes
 def sha256_hash(data):
-    digest = Hash(SHA256(), backend=default_backend())
-    digest.update(data)
-    return digest.finalize()
+    digest = Hash(SHA256(), backend=default_backend()) # inicializar o objeto de hash
+    digest.update(data) #alimentar lhe com dados
+    return digest.finalize() # finalizar e retornar o digest
 
 # Benchmark 
 
