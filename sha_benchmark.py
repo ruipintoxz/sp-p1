@@ -3,7 +3,7 @@ import timeit # Medir tempo de execução
 import numpy as np  # Cálculos estatísticos (média, desvio padrão)
 import csv  # Guardar resultados em ficheiro CSV
 from cryptography.hazmat.primitives.hashes import Hash, SHA256 
-# primitivas de baixo nível para medir SHA-256 diretamente, sem abstrações
+# Primitivas de baixo nível para medir SHA-256 diretamente, sem abstrações
 from cryptography.hazmat.backends import default_backend #Biblioteca para backend
 
 # Tamanhos de ficheiro 
